@@ -1,0 +1,11 @@
+[theme]
+primaryColor = "#2E7D32"
+backgroundColor = "#F0F3F4"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#2C3E50"
+font = "sans serif"
+[email]
+smtp_server = "smtp.gmail.com"
+smtp_port = 587
+sender_email = "sindhusrisaichandralekha@gmail.com"
+sender_password = "sindhusrisai2005995533"  # Use Gmail App Password, not your regular password

@@ -1,36 +1,37 @@
-# backend/schemas.py
 from pydantic import BaseModel
-from typing import Optional
+from datetime import date
 
-class TaskCreate(BaseModel):
+class TaskBase(BaseModel):
     name: str
-    category: Optional[str] = "study"
+    category: str
     duration: int
-    energy_required: Optional[str] = "medium"
-    priority: Optional[int] = 3
-    deadline: Optional[str] = None
+    energy_required: str
+    priority: int
+    deadline: date | None = None
+
+class TaskCreate(TaskBase):
+    pass
 
 class TaskUpdate(BaseModel):
-    name: Optional[str]
-    category: Optional[str]
-    duration: Optional[int]
-    energy_required: Optional[str]
-    priority: Optional[int]
-    deadline: Optional[str]
-    completed: Optional[bool]
+    name: str | None
+    category: str | None
+    duration: int | None
+    energy_required: str | None
+    priority: int | None
+    deadline: date | None
+    completed: bool | None
 
-class TaskOut(TaskCreate):
+class TaskOut(TaskBase):
     id: int
     completed: bool
-    created_at: Optional[str]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ScheduleRequest(BaseModel):
+    slots: list[str]
     energy_level: str
-    slots: list[str]  # e.g. ["09:00-12:00","15:00-18:00"]
 
 class HealthIn(BaseModel):
     type: str
-    value: int
+    value: str

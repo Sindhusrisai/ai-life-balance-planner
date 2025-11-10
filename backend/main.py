@@ -4,13 +4,22 @@ from sqlalchemy.orm import Session
 from backend import models, schemas
 from backend.models import Task as TaskModel, SessionLocal, init_db
 from planner import generate_day_plan
-from advisor import generate_advice  # placeholder advice
+from advisor import generate_advice
 from datetime import datetime
-from backend.email_utils import send_email_notification
- # ✅ import the helper
+from backend.email_utils import send_email_notification  # ✅ correct function
 
-app = FastAPI(title="AI LifeBalance Backend")
-app = FastAPI()
+app = FastAPI(title="AI LifeBalance Backend")   # ✅ keep only this one
+
+# -------------------
+# CORS (update to allow Streamlit Cloud later)
+# -------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # ✅ allow frontend hosted anywhere
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/send-test-email")
 def send_test_email():
@@ -76,10 +85,10 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
 
     # ✅ Optional: send email notification
     try:
-        send_email(
+        send_email_notification(
+            receiver_email="your_email@gmail.com",
             subject="🎯 New Task Added to AI LifeBalance",
-            body=f"Task '{task.name}' has been successfully added to your planner.",
-            to_email="your_email@gmail.com"   # or dynamic user email later
+            body=f"Task '{task.name}' has been successfully added to your planner."
         )
     except Exception as e:
         print(f"Email sending failed: {e}")

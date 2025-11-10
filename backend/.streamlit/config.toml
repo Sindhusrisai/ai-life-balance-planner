@@ -7,5 +7,3 @@ font = "sans serif"
 [email]
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
-sender_email = "sindhusrisaichandralekha@gmail.com"
-sender_password = "sindhusrisai2005995533"  # Use Gmail App Password, not your regular password
